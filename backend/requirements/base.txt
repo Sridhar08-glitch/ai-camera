@@ -1,0 +1,36 @@
+# Phase 1 backend dependencies — pinned targets, verified against Python 3.12.9 / Windows.
+# Actual resolved versions are captured in the Phase 1 verification report.
+
+Django==5.2.7
+djangorestframework==3.16.1
+djangorestframework-simplejwt==5.5.1
+channels==4.3.1
+channels-redis==4.3.0
+celery==5.5.3
+redis==6.4.0
+psycopg[binary]==3.2.10
+django-environ==0.12.0
+django-cors-headers==4.9.0
+uvicorn[standard]==0.38.0
+structlog==25.4.0
+whitenoise==6.11.0
+
+# Phase 4 — video ingestion validation/metadata/thumbnail ONLY (probe-scoped).
+# NOT the Phase 5 frame-processing decoder architecture. Bundles FFmpeg (libav);
+# license review required before commercial redistribution (ADR-023).
+av==13.1.0
+
+# Phase 5 — canonical in-memory frame representation (rgb24 ndarray) for the CV
+# processing pipeline; backs av.VideoFrame.to_ndarray(). Numeric-array primitive
+# (BSD-3-Clause), NOT an AI framework. Verified on Python 3.12.9 (ADR-025/D10).
+numpy==2.2.6
+
+# Phase 6 — production inference-runtime boundary (ONNX Runtime, MIT). Loads the
+# future Phase 6T project-trained ONNX detector; CPU EP always available, CUDA EP
+# only with the separate onnxruntime-gpu package (+ cuDNN) — NOT installed here.
+# This is NOT a training framework; PyTorch is Phase 6T training-only (ADR-028).
+onnxruntime==1.20.1
+# ONNX schema/graph helpers (Apache-2.0) — authoring/validating ONNX containers
+# (e.g. the project-created TEST_ONLY infra artifact). NOT torch, NOT training,
+# NOT pretrained weights. Enables real ONNX Runtime verification (ADR-028/032).
+onnx==1.17.0

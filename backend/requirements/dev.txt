@@ -1,0 +1,14 @@
+# Phase 1 development/test dependencies.
+-r base.txt
+
+pytest==8.4.2
+pytest-django==4.11.1
+pytest-asyncio==1.2.0
+pytest-cov==7.0.0
+factory-boy==3.3.3
+freezegun==1.5.5
+daphne==4.2.1
+ruff==0.14.0
+
+# Phase 5 — memory-behaviour assertions in processing benchmarks/tests (§18/§36).
+psutil==7.2.2

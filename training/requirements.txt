@@ -1,0 +1,21 @@
+# Phase 6T training environment — ISOLATED. Install into training/.venv ONLY.
+# NEVER add these to backend/requirements/*. The production runtime stays
+# ONNX-Runtime-only and torch-free (ADR-033).
+#
+# Python 3.12 (matches project 3.12.9).
+#
+# GPU: the CUDA build is installed + VERIFIED on the RTX 3070 Laptop (6T-B preflight,
+# 2026-07-16). download.pytorch.org became reachable; install with:
+#     pip install torch==2.13.0+cu126 torchvision==0.28.0+cu126 \
+#         --index-url https://download.pytorch.org/whl/cu126
+# torch.version.cuda=12.6, cuda.is_available()=True, device=RTX 3070 Laptop (sm_86).
+# No standalone CUDA Toolkit required (the wheel bundles the CUDA 12.6 runtime);
+# driver 592.00 is sufficient. For a CPU-only host, drop the "+cu126" suffix.
+# onnxruntime-gpu (CUDA 12.x + cuDNN 9) remains a SEPARATE, later, prod-only decision.
+
+torch==2.13.0+cu126      # CUDA 12.6 build (verified on RTX 3070 Laptop)
+torchvision==0.28.0+cu126
+numpy==2.5.1             # training-env copy (backend runtime pins numpy==2.2.6 separately)
+onnx==1.17.0             # ONNX export + checker (shared identifier with runtime)
+onnxruntime==1.20.1      # CPU — PyTorch<->ONNX parity checks (shared with runtime)
+pycocotools==2.0.11      # COCO-format mAP evaluation

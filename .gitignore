@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# Env / secrets
+.env
+.env.local
+*.local
+
+# Django
+*.sqlite3
+/backend/staticfiles/
+/backend/media/
+
+# Celery
+celerybeat-schedule*
+
+# Local run/debug output
+/backend/out.txt
+/backend/results.txt
+/backend/full_results.txt
+/backend/final.txt
+/training/_smoke_out/
+
+# Node / Next.js
+node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/build/
+npm-debug.log*
+pnpm-debug.log*
+*.tsbuildinfo
+
+# Logs
+*.log
+scripts/pip_install.log
+
+# OS / IDE / AI tooling
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.claude/
+
+# Large binary artifacts — never commit (keeps repo size small)
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.zip
+*.tar
+*.tar.gz
+/training/checkpoints/
+/training/runs/
+/training/data/
+/datasets/
+/data/
+
+# Celery beat schedule (also covered above, kept for clarity)
+celerybeat-schedule.*
