@@ -47,7 +47,7 @@ scripts/pip_install.log
 Thumbs.db
 .idea/
 .vscode/
-.claude/
+
 
 # Large binary artifacts — never commit (keeps repo size small)
 *.onnx
