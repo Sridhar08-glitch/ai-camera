@@ -13,7 +13,7 @@ satisfies the datasets' attribution licenses (CC BY / CC BY-SA).
 - **This project's application** — our software.
 
 Every dataset below independently passed the production-training rights gate (or is
-proposed to, pending explicit human approval — see `PHASE_6T_B_DATASET_SELECTION_REPORT.md`).
+proposed to, pending explicit human approval).
 
 ---
 

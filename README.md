@@ -21,7 +21,7 @@ acquisition).** Phases 0–6 and 6T-A are complete and verified.
 
 | Phase | Scope | Status |
 |---|---|---|
-| 0 | Architecture freeze (`PHASE_0_ARCHITECTURE.md`) | ✅ Frozen |
+| 0 | Architecture freeze | ✅ Frozen |
 | 1 | Platform foundation — Django/DRF/Channels, JWT auth + RBAC, Celery, Postgres, Redis, Next.js shell | ✅ Done |
 | 2 | Observability, AI governance tables, retention framework | ✅ Done |
 | 3 | Traffic network model (City→Zone→Road→Segment→Intersection→Approach→Lane→Camera, ROIs, counting lines) | ✅ Done |
@@ -35,9 +35,8 @@ acquisition).** Phases 0–6 and 6T-A are complete and verified.
 | 13–17 | SUMO simulation → signal model → signal optimization → prediction → digital twin | ⏳ Planned |
 | 18–19 | Performance/scale testing, production-readiness interfaces (RTSP, multi-GPU, edge) | ⏳ Planned |
 
-**Test suite:** 342 backend + 27 training tests passing. Each phase ships with a verification
-report (`PHASE_*_VERIFICATION_REPORT.md`) — those documents are the ground truth for what is
-actually implemented vs. planned.
+**Test suite:** 342 backend + 27 training tests passing. Each phase is verified with a full
+test run before it is marked done.
 
 A deliberate research constraint: **detection models are trained from scratch** (no pretrained
 weights), on openly licensed data only, behind explicit human approval gates. The first model
@@ -48,8 +47,8 @@ data and is therefore tagged EXPERIMENTAL for other regions.
 
 ## 🏗 Architecture
 
-Authoritative design: [`PHASE_0_ARCHITECTURE.md`](PHASE_0_ARCHITECTURE.md) (frozen; changes
-require a new ADR). All decisions are recorded in [`docs/adr/`](docs/adr) (ADR-001 … ADR-037).
+The architecture is frozen; changes require a new ADR. All decisions are recorded in
+[`docs/adr/`](docs/adr) (ADR-001 … ADR-037).
 
 ### Three-runtime split (ADR-002)
 
@@ -205,9 +204,6 @@ implementing them, not re-architecting:
 ## 📂 Repository layout
 
 ```
-├── PHASE_0_ARCHITECTURE.md       # Frozen architecture spec (authoritative)
-├── PHASE_N_PLAN.md               # Approved plan per phase
-├── PHASE_N_VERIFICATION_REPORT.md# Evidence of what was actually built & tested
 ├── THIRD_PARTY_DATA.md           # Dataset licensing & attribution
 ├── docs/adr/                     # ADR-001 … ADR-037 — all architecture decisions
 ├── backend/                      # Django modular monolith (apps/, config/, tests/)
@@ -222,8 +218,7 @@ The training track uses only openly licensed data, verified live before approval
 
 - **UVH-26** and **BMD-45** (AIM @ IISc, HuggingFace) — **CC BY 4.0**, 1920×1080 traffic
   imagery, 14-class source taxonomy mapped to the 5-class canonical taxonomy
-  `uvh_bmd_5class_v1`. See `THIRD_PARTY_DATA.md` and
-  `PHASE_6T_B_DATASET_SELECTION_REPORT.md` for full attribution, citations, and the
+  `uvh_bmd_5class_v1`. See `THIRD_PARTY_DATA.md` for full attribution, citations, and the
   license-verification evidence.
 
 Dataset import → integrity → mapping → dedup → leakage-safe split → human approval (Gate D) is
@@ -313,17 +308,16 @@ uses the in-memory layer under test.
 - Auth: `POST /api/v1/auth/login` · `/refresh` · `/logout` · `GET /api/v1/auth/me`
 - Users/roles: `GET|POST /api/v1/users`, `GET|PATCH|DELETE /api/v1/users/{id}`, `POST /api/v1/users/{id}/role`, `GET /api/v1/roles`
 - Domain APIs for network, ingestion, processing, datasets, and governance are under
-  `/api/v1/…` — see each app's `urls.py` and the phase verification reports.
+  `/api/v1/…` — see each app's `urls.py`.
 - WebSocket: `ws://localhost:8000/ws/system/` (JWT via `access_token` subprotocol)
 
 ## 📖 Reading order for new contributors
 
-1. `PHASE_0_ARCHITECTURE.md` — the frozen spec (product definition, non-goals, roadmap §40).
+1. This README — product definition, non-goals, and roadmap.
 2. `docs/adr/` — why each decision was made.
-3. The latest `PHASE_*_VERIFICATION_REPORT.md` files — what is *actually* implemented and how it
-   was verified.
+3. Each app's models, services, and tests — what is *actually* implemented.
 
 ---
 
 *Solo research project — designed and developed by **Sridhar**. All measurements, models, and
-results are experimental until stated otherwise in a phase verification report.*
+results are experimental.*
